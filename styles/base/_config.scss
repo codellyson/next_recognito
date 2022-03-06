@@ -1,0 +1,33 @@
+.container {
+  margin-right: auto;
+  margin-left: auto;
+  padding-right: 15px;
+  padding-left: 15px;
+  /* for edge cases: */
+  width: 100%;
+  max-width: 100%;
+}
+
+.container {
+  @include for-tablet-portrait-up {
+    width: 750px;
+  }
+}
+
+.container {
+  @include for-tablet-landscape-up {
+    width: 970px;
+  }
+}
+
+.container {
+  @include for-desktop-up {
+    width: 1170px;
+  }
+}
+
+.container {
+  @include for-big-desktop-up {
+    width: 1920px;
+  }
+}
