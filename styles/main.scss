@@ -11,3 +11,77 @@
 @import "components/button";
 
 @import "pages/home";
+
+#image-holder.row {
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.image-container {
+  margin-bottom: 1rem;
+  position: relative;
+}
+
+.image-container .image-container__inner img {
+  width: 175px;
+  height: 200px;
+}
+
+.image-container .image-container__inner img {
+  width: 100%;
+  height: auto;
+}
+
+.image-container .single-convert-btn {
+  position: absolute;
+  top: 33%;
+  right: 33%;
+  border: none;
+  background: none;
+  cursor: pointer;
+  outline: none;
+  color: black;
+  /* visibility: hidden; */
+}
+
+.image-container .single-convert-btn:active {
+  outline: none;
+}
+
+.image-container .remove-btn {
+  position: absolute;
+  z-index: 99;
+  background-color: rgba(236, 218, 218, 0.281);
+  border-radius: 50%;
+  right: 5%;
+  height: 30px;
+  width: 30px;
+  top: 5%;
+  transition: all 300ms;
+  color: rgba(0, 0, 0, 0.801);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.image-container .remove-btn:hover {
+  background: #000;
+  color: #f0f0f0;
+}
+.spin {
+  animation: spin 2s infinite linear;
+}
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.toolbox {
+  visibility: hidden;
+}
