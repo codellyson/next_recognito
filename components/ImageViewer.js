@@ -35,14 +35,14 @@ function ImageViewer({ images }) {
   return (
     <>
       <div className="sticky-alert"></div>
-      {!images ? (
+      {images.length === 0 ? (
         <h3>No task yet! Add Task.</h3>
       ) : (
         images.map((image, index) => (
           <div className="image-container" key={index}>
             <div className="image-container__inner">
               <Image
-                src={image?.filePath?.replace("public", "")}
+                src={image?.filePath.replace("public", "")}
                 alt=""
                 height={"100%"}
                 width={150}

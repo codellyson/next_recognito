@@ -3,9 +3,8 @@ import Image from "next/image";
 import Router from "next/router";
 import nprogress from "nprogress";
 import React from "react";
-// import ImageViewer from "./ImageViewer";
+import ImageViewer from "./ImageViewer";
 import dynamic from "next/dynamic";
-const ImageViewer = dynamic(() => import("./ImageViewer"));
 
 function Sidebar() {
   const [images, setImages] = React.useState([]);
@@ -14,7 +13,7 @@ function Sidebar() {
       nprogress.start();
       try {
         const response = await axios.get("/api/convert");
-        setImages(response.data.file);
+        setImages(response?.data?.file);
         nprogress.done();
       } catch (error) {
         nprogress.done();
@@ -32,7 +31,11 @@ function Sidebar() {
           </h5>
           <div className="sidebar-divider"></div>
           <div className="row" id="image-holder">
-            <ImageViewer images={images} />
+            {images.length === 0 ? (
+              <h3>No task yet! Add Task.</h3>
+            ) : (
+              <ImageViewer images={images} />
+            )}
           </div>
         </div>
 
