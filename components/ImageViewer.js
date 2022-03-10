@@ -17,6 +17,7 @@ function ImageViewer({ images }) {
         alert(response.data.message);
         target.classList.remove("spin");
         localStorage(response.data.result, "recognito_result");
+        window.location.href = "#modal-2";
       }
     } catch (error) {
       alert(error);
