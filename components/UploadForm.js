@@ -40,7 +40,7 @@ function UploadForm() {
   return (
     <div className="card ">
       <div className="d-flex flex-column align-item-center">
-        <div className="custom-file w-400 text-center">
+        <div className="custom-file w-full text-center">
           <input
             type="file"
             id="multi-file-input-1"
@@ -58,7 +58,7 @@ function UploadForm() {
         <button
           className="btn btn-primary w-full my-5"
           onClick={handleSubmit}
-          disabled={!files ? true : false}
+          disabled={!files === null ? true : false}
         >
           Submit
         </button>

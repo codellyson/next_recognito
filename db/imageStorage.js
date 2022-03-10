@@ -4,8 +4,8 @@ export async function insertImage(db, file) {
   try {
     const collection = db.collection("ImageStorage");
     const image = await collection.insertOne({
-      fileName: file.filename,
-      filePath: file.path,
+      fileName: file.id,
+      filePath: file.url,
     });
     return image;
   } catch (error) {

@@ -4,16 +4,15 @@ import Router from "next/router";
 import nprogress from "nprogress";
 import React from "react";
 import ImageViewer from "./ImageViewer";
-import dynamic from "next/dynamic";
 
-function Sidebar() {
+function Sidebar({ handleSidebar }) {
   const [images, setImages] = React.useState([]);
   React.useEffect(() => {
     async function fetchImage() {
       nprogress.start();
       try {
         const response = await axios.get("/api/convert");
-        setImages(response?.data?.file);
+        setImages(response.data.file);
         nprogress.done();
       } catch (error) {
         nprogress.done();

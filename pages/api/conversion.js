@@ -10,7 +10,6 @@ handler.post(async (req, res) => {
   try {
     const { id } = req.body;
     const singleFile = await getImage(req.db, id);
-
     const text = await ocrSpace(singleFile.filePath, {
       apiKey: process.env.OCR_KEY,
       URL: process.env.OCR_URL,

@@ -3,6 +3,10 @@ import { uploadImage } from "../../../functions/multer";
 import database from "../../../lib/mongodb";
 import { insertImage, getImages } from "../../../db/imageStorage";
 import { ncOpts } from "../../../lib/ncOpts";
+import { uploader } from "../../../functions/cloudinary";
+import { promisify } from "util";
+import { unlink } from "fs";
+const unlinkAsync = promisify(unlink);
 const handler = nextConnect(ncOpts);
 
 handler.use(database);
@@ -21,8 +25,11 @@ handler.post(uploadImage.array("imageFile"), async (req, res) => {
   try {
     const files = req.files;
     let image;
+
     files.forEach(async function (file) {
-      image += await insertImage(req.db, file);
+      const uploadedImage = await uploader(file.path);
+      await insertImage(req.db, uploadedImage);
+      await unlinkAsync(file.path);
     });
 
     return res
@@ -33,9 +40,6 @@ handler.post(uploadImage.array("imageFile"), async (req, res) => {
   }
 });
 
-handler.delete(async (req, res) => {
-  console.log(req.params);
-});
 export const config = {
   api: {
     bodyParser: false,

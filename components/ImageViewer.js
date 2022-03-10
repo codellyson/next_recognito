@@ -9,15 +9,18 @@ import { useRouter } from "next/router";
 import { localStorage } from "../functions/localStorage";
 
 function ImageViewer({ images }) {
-  const router = useRouter();
   const handleConversion = async (id, target) => {
-    if (id === target.getAttribute("data-id")) {
-      target.classList.add("spin");
-      const response = await axios.post("/api/conversion", { id: id });
-      alert(response.data.message);
-      target.classList.remove("spin");
-      localStorage(response.data.result, "recognito_result");
-      window.location.href = "#modal-2";
+    try {
+      if (id === target.getAttribute("data-id")) {
+        target.classList.add("spin");
+        const response = await axios.post("/api/conversion", { id: id });
+        alert(response.data.message);
+        target.classList.remove("spin");
+        localStorage(response.data.result, "recognito_result");
+      }
+    } catch (error) {
+      alert(error);
+      window.location.reload();
     }
   };
   const handleDeletion = async (id) => {
@@ -25,10 +28,11 @@ function ImageViewer({ images }) {
       nprogress.start();
       const response = await axios.delete(`/api/convert/${id}`);
       nprogress.done();
-      Router.reload(window.location.pathname);
+      window.location.reload();
     } catch (error) {
       nprogress.done();
-      console.error(error);
+      alert(error);
+      window.location.reload();
     }
   };
 
@@ -42,7 +46,7 @@ function ImageViewer({ images }) {
           <div className="image-container" key={index}>
             <div className="image-container__inner">
               <Image
-                src={image?.filePath.replace("public", "")}
+                src={image?.filePath}
                 alt=""
                 height={"100%"}
                 width={150}
