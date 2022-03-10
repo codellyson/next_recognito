@@ -18,6 +18,7 @@ function ImageViewer({ images }) {
         target.classList.remove("spin");
         localStorage(response.data.result, "recognito_result");
         window.location.href = "#modal-2";
+        setTimeout(() => window.location.reload(), 100);
       }
     } catch (error) {
       alert(error);
@@ -27,7 +28,7 @@ function ImageViewer({ images }) {
   const handleDeletion = async (id) => {
     try {
       nprogress.start();
-      const response = await axios.delete(`/api/convert/${id}`);
+      await axios.delete(`/api/convert/${id}`);
       nprogress.done();
       window.location.reload();
     } catch (error) {

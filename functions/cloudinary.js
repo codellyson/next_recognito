@@ -30,11 +30,20 @@ const uploader = async (file) => {
     );
   });
 };
-const deleteCloudImage = async (id) => {
-  try {
-    return await cloudinary.v2.uploader.destroy(id, { resource_type: "auto" });
-  } catch (error) {
-    return error;
-  }
+const deleteCloudImage = (id) => {
+  cloudinary.v2.uploader.destroy(
+    id,
+    {
+      type: "upload",
+      resource_type: "auto",
+    },
+    (error, result) => {
+      if (result) {
+        return result;
+      } else {
+        return error;
+      }
+    }
+  );
 };
 export { uploader, deleteCloudImage };

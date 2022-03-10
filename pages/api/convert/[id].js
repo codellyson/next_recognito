@@ -10,12 +10,8 @@ handler.delete(async (req, res) => {
   try {
     const image = await getImage(req.db, id);
     await deleteImage(req.db, image._id);
-    deleteCloudImage(image.fileName, function (error, result) {
-      if (error) {
-        throw new Error(error);
-      }
-      return res.status(200).json({ message: "success" });
-    });
+    deleteCloudImage(image.fileName);
+    return res.status(200).json({ message: "success" });
   } catch (error) {
     res.status(500).json({ error });
   }
