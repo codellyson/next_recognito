@@ -8,16 +8,20 @@ import Modal from "../components/Modal";
 const Navbar = dynamic(() => import("../components/Navbar"), {
   ssr: false,
 });
-
 export default function Home() {
   const [data, setData] = React.useState("");
   React.useEffect(() => {
     const result = window.localStorage.getItem("recognito_result");
     setData(JSON.parse(result));
   }, []);
+  const handleRefresh = () => {
+    const result = window.localStorage.getItem("recognito_result");
+    setData(JSON.parse(result));
+  };
+
   return (
     <section>
-      <Modal content={data} />
+      <Modal content={data} handleRefresh={() => handleRefresh()} />
       <Head>
         <title>Recognito</title>
       </Head>

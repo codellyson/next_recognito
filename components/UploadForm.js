@@ -2,6 +2,7 @@ import axios from "axios";
 import nprogress from "nprogress";
 import React from "react";
 import Router from "next/router";
+import Snackbar from "node-snackbar";
 function UploadForm() {
   const [files, setFiles] = React.useState(null);
   const [isSubmitting, setSubmitting] = React.useState(false);
@@ -11,7 +12,6 @@ function UploadForm() {
     const { files } = e.target;
     setFiles(files);
   };
-
   const handleSubmit = async () => {
     try {
       nprogress.start();
@@ -20,16 +20,21 @@ function UploadForm() {
       for (let i = 0; i < files.length; i++) {
         formData.append("imageFile", files[i]);
       }
-
       const uploadResponse = await axios.post("/api/convert", formData, {
         onUploadProgress: (progressEvent) => {
           const { loaded, total } = progressEvent;
           setProgress(Math.floor((loaded * 100) / total));
         },
       });
-      setTimeout(() => {
-        Router.reload(window.location.pathname);
-      }, 1000);
+      Snackbar.show({
+        text: uploadResponse.data.message,
+        duration: Snackbar.LENGTH_LONG,
+        actionText: "Refresh",
+        pos: "top-center",
+        onActionClick: function () {
+          window.location.reload(false);
+        },
+      });
       nprogress.done();
       setSubmitting(!isSubmitting);
     } catch (error) {
@@ -38,9 +43,9 @@ function UploadForm() {
     }
   };
   return (
-    <div className="card ">
+    <div className="card w-full w-md-half ">
       <div className="d-flex flex-column align-item-center">
-        <div className="custom-file w-full text-center">
+        <div className="custom-file  text-center">
           <input
             type="file"
             id="multi-file-input-1"

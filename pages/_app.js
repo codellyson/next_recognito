@@ -3,6 +3,7 @@ import Layout from "../layout/Layout";
 
 import "../styles/main.scss";
 import "nprogress/nprogress.css";
+import "node-snackbar/dist/snackbar.min.css";
 function MyApp({ Component, pageProps }) {
   React.useEffect(() => {
     const script = document.createElement("script");

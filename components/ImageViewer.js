@@ -1,11 +1,8 @@
 import axios from "axios";
 import Image from "next/image";
-import Router from "next/router";
 import nprogress from "nprogress";
 import React from "react";
-import Alert from "./Alert";
-import Modal from "./Modal";
-import { useRouter } from "next/router";
+import Snackbar from "node-snackbar";
 import { localStorage } from "../functions/localStorage";
 
 function ImageViewer({ images }) {
@@ -14,27 +11,52 @@ function ImageViewer({ images }) {
       if (id === target.getAttribute("data-id")) {
         target.classList.add("spin");
         const response = await axios.post("/api/conversion", { id: id });
-        alert(response.data.message);
         target.classList.remove("spin");
         localStorage(response.data.result, "recognito_result");
         window.location.href = "#modal-2";
-        setTimeout(() => window.location.reload(), 100);
+        Snackbar.show({
+          text: response.data.message + "Click on refresh to see the result",
+          duration: 2000,
+          pos: "top-center",
+        });
       }
     } catch (error) {
-      alert(error);
-      window.location.reload();
+      Snackbar.show({
+        text: error,
+        duration: Snackbar.LENGTH_LONG,
+        actionText: "Refresh",
+        pos: "top-center",
+        onActionClick: function () {
+          window.location.reload(false);
+        },
+      });
     }
   };
   const handleDeletion = async (id) => {
     try {
       nprogress.start();
-      await axios.delete(`/api/convert/${id}`);
+      const response = await axios.delete(`/api/convert/${id}`);
       nprogress.done();
-      window.location.reload();
+      Snackbar.show({
+        text: response.data.message,
+        duration: Snackbar.LENGTH_LONG,
+        actionText: "Dismiss",
+        pos: "top-center",
+        onActionClick: function () {
+          window.location.reload(false);
+        },
+      });
     } catch (error) {
       nprogress.done();
-      alert(error);
-      window.location.reload();
+      Snackbar.show({
+        text: error,
+        duration: Snackbar.LENGTH_LONG,
+        actionText: "Refresh",
+        pos: "top-center",
+        onActionClick: function () {
+          window.location.reload(false);
+        },
+      });
     }
   };
 

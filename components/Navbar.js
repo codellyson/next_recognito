@@ -31,8 +31,8 @@ function Navbar({ handleSidebar }) {
 
         <ul className="navbar-nav  d-md-flex ml-auto">
           <li className="nav-item active">
-            <a href="/about" className="nav-link">
-              About This!
+            <a href="#modal-2" className="btn  nav-link">
+              Recent task
             </a>
           </li>
 
